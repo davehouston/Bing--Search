@@ -1,35 +1,35 @@
-package Bing::Role::SearchRequest::Options;
+package Bing::Role::WebRequest::Options;
 use Moose::Role;
 use Carp;
 
 requires 'build_request';
 requires 'params';
 
-has 'Options' => ( 
+has 'Web_Options' => ( 
    is => 'rw',
    isa => 'ArrayRef',
    lazy_build => 1
 );
 
-sub _build_Options { }
+sub _build_Web_Options { }
 
-sub setOption { 
+sub setWeb_Option { 
    my( $self, $option ) = @_;
    # Since there's only two possible options here..
-   unless( $option =~ /DisableLocationDetection$|EnableHighlighting$/ ) {
+   unless( $option =~ /DisableHostCollapsing$|DisableQueryAlterations$/ ) {
       carp 'Invalid option: ' . $option . ' -- ignoring.';
       return;
    }
    if( $option =~ /^-/ ) { 
       # Remove an option.
-      my @removed = grep { !$option } @{$self->Options};
-      $self->Options( \@removed );
+      my @removed = grep { !$option } @{$self->Web_Options};
+      $self->Web_Options( \@removed );
    } else { 
       # add an option
       my $list = $self->Options;
       unless( grep { $option } @$list ) { 
          push @$list, $option;
-         $self->Options( $list );
+         $self->Web_Options( $list );
       }
    }
 
@@ -39,7 +39,7 @@ sub setOption {
 before 'build_request' => sub { 
    my $self = shift;
    my $hash = $self->params;
-   $hash->{Options} = $self->Options;
+   $hash->{'Web.Options'} = $self->Web_Options;
    $self->params( $hash );
 };
 
