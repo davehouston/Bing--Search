@@ -9,6 +9,7 @@ requires 'Web_Count';
 has 'Web_Offset' => (
    is => 'rw',
    isa => 'Num',
+   predicate => 'has_Web_Offset'
 );
 
 before 'Web_Offset' => sub { 
@@ -23,9 +24,11 @@ before 'Web_Offset' => sub {
 
 before 'build_request' => sub { 
    my $self = shift;
-   my $hash = $self->params;
-   $hash->{'Web.Count'} = $self->Web_Count;
-   $self->params( $hash );
+   if( $self->has_Web_Offset ) { 
+      my $hash = $self->params;
+      $hash->{'Web.Offset'} = $self->Web_Count;
+      $self->params( $hash );
+   }
 };
 
 1;

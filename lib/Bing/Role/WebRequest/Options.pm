@@ -11,7 +11,7 @@ has 'Web_Options' => (
    lazy_build => 1
 );
 
-sub _build_Web_Options { }
+sub _build_Web_Options { [] }
 
 sub setWeb_Option { 
    my( $self, $option ) = @_;

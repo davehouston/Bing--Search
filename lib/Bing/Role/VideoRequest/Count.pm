@@ -1,4 +1,4 @@
-package Bing::Role::WebRequest::Count;
+package Bing::Role::VideoRequest::Count;
 use Moose::Role;
 use Carp;
 
@@ -6,26 +6,25 @@ requires 'build_request';
 requires 'params';
 
 
-has 'Web_Count' => (
+has 'Video_Count' => (
    is => 'rw',
-   predicate => 'has_Web_Count',
-   clearer => 'clear_Web_Count'
+   predicate => 'has_Video_Count',
 );
 
 
-before 'Web_Count' => sub {
+before 'Video_Count' => sub {
    my( $self, $param ) = @_;
    return unless $param;
    unless( $param <= 50 && $param >= 1 ) { 
-      croak "Web.Count value of $param must be between 1 and 50.";      
+      croak "Video.Count value of $param must be between 1 and 50.";      
    }
 };
 
 before 'build_request' => sub { 
    my $self = shift;
-   if( $self->has_Web_Count ) { 
+   if( $self->has_Video_Count ) { 
       my $hash = $self->params;
-      $hash->{'Web.Count'} = $self->Web_Count;
+      $hash->{'Video.Count'} = $self->Video_Count;
       $self->params( $hash );
    }
 };

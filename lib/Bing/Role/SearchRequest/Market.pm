@@ -5,13 +5,13 @@ requires 'build_request';
 requires 'params';
 
 
-has 'AppId' => (
+has 'Market' => (
    is => 'rw',
    isa => 'Str',
    lazy_build => 1
 );
 
-sub _build_Appid { }
+sub _build_Market { }
 
 before 'build_request' => sub { 
    my $self = shift;
