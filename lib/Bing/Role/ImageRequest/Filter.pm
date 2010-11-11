@@ -19,7 +19,7 @@ has '_Image_Filter_list' => (
    is => 'ro',
    isa => 'ArrayRef',
    default => sub { 
-      qw(
+      [ qw(
          Size:Small
          Size:Medium
          Size:Large
@@ -35,7 +35,7 @@ has '_Image_Filter_list' => (
          Face:Face
          Face:Portrait
          Face:Other
-      )
+      ) ]
 
    }
 );
@@ -61,7 +61,7 @@ sub setImage_Filter {
       my @removed = grep { !$option } @{$self->Image_Filter}
    } else { 
       # Add an option
-      $option =~ s/^+//;
+      $option =~ s/^\+//;
       return unless exists $opts{$option};
       my $list = $self->Image_Filter;
       unless( grep { $option } @$list ) { 

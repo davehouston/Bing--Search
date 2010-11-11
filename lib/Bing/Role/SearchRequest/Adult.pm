@@ -1,5 +1,6 @@
 package Bing::Role::SearchRequest::Adult;
 use Moose::Role;
+use Carp;
 
 requires 'build_request';
 requires 'params';
@@ -14,9 +15,10 @@ sub _build_Adult { }
 
 before 'Adult' => sub { 
    my $self = shift;
-   my ($param) = @_;
+   return unless @_;
+    my $param = shift;
    unless( $param =~ /off|moderate|strict/i ) { 
-      die 'In setting "Adult", valid options are: off, moderate, strict';
+      croak "In setting 'Adult', valid options are: off, moderate, strict.  Got $param";
    }
 };
 

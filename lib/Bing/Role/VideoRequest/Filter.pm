@@ -19,7 +19,7 @@ has '_Video_Filter_list' => (
    is => 'ro',
    isa => 'ArrayRef',
    default => sub { 
-      qw(
+     [ qw(
          Duration:Short
          Duration:Medium
          Duration:Long
@@ -28,7 +28,7 @@ has '_Video_Filter_list' => (
          Resolution:Low
          Resolution:Medium
          Resolution:High
-      )
+      ) ]
    }
 );
 
@@ -44,7 +44,7 @@ sub setVideo_Filter {
       my @removed = grep { !$option } @{$self->Video_Filter}
    } else { 
       # Add an option
-      $option =~ s/^+//;
+      $option =~ s/^\+//;
       return unless exists $opts{$option};
       my $list = $self->Video_Filter;
       unless( grep { $option } @$list ) { 

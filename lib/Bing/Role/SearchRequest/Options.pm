@@ -26,6 +26,7 @@ sub setOption {
       $self->Options( \@removed );
    } else { 
       # add an option
+      $option =~ s/^\+//;
       my $list = $self->Options;
       unless( grep { $option } @$list ) { 
          push @$list, $option;

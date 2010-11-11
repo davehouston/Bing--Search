@@ -26,7 +26,7 @@ around 'Radius' => sub {
       $param = 250;
    }
    $self->$next( $param );
-}
+};
 
 before 'build_request' => sub { 
    my $self = shift;

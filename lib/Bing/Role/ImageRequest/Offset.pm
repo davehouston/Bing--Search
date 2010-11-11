@@ -14,6 +14,7 @@ has 'Image_Offset' => (
 
 before 'Image_Offset' => sub { 
    my( $self, $param ) = @_;
+   return unless $param;
    unless( $param <= 1000 && $param >= 0 ) { 
       croak "Image.Offset value of $param must be between 0 and 1,000.";      
    }

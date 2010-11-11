@@ -11,7 +11,7 @@ has 'UILanguage' => (
    lazy_build => 1
 );
 
-sub _build_Query { }
+sub _build_UILanguage { }
 
 before 'build_request' => sub { 
    my $self = shift;

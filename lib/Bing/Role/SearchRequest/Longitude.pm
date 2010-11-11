@@ -14,6 +14,7 @@ sub _build_SearchResult_Longitude { }
 
 before 'Longitude' => sub { 
    my( $self, $param ) = @_;
+   return unless $param;
    unless( $param <= 180 && $param >= -180 ) { 
       die 'Longitude must be between -180 and 180.';
    }

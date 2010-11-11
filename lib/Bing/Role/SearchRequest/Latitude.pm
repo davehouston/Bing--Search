@@ -14,6 +14,7 @@ sub _build_SearchResult_Latitude { }
 
 before 'Latitude' => sub { 
    my( $self, $param ) = @_;
+   return unless $param;
    unless( $param <= 90 && $param >= -90 ) { 
       die 'Latitude must be between -90 and 90';
    }
