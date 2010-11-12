@@ -1,15 +1,8 @@
 use Test::More;
-use lib qw(lib);
 
 use_ok('Bing::Search::Source::MobileWeb');
 
 my $obj = new_ok('Bing::Search::Source::MobileWeb');
-
-ok( $obj->AppId('42'), 'Setting AppId');
-   is( $obj->AppId(), '42', 'AppId is still set.');
-
-ok( $obj->Query('rocks'), 'Setting query');
-   is( $obj->Query(), 'rocks', 'Query is still set.');
 
 ok( $obj->Market('en-US'), 'Setitng the market');
    is( $obj->Market(), 'en-US', 'Market is still set');

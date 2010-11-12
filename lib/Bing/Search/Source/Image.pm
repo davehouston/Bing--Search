@@ -5,8 +5,6 @@ extends 'Bing::Search::Source';
 with 'Bing::Role::ImageRequest::Count';
 
 with qw(
-Bing::Role::SearchRequest::AppId
-Bing::Role::SearchRequest::Query
 Bing::Role::SearchRequest::Market
 Bing::Role::SearchRequest::Adult
 Bing::Role::SearchRequest::Version

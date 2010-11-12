@@ -5,8 +5,6 @@ extends 'Bing::Search::Source';
 with 'Bing::Role::PhonebookRequest::Count';
 
 with qw(
-Bing::Role::SearchRequest::AppId
-Bing::Role::SearchRequest::Query
 Bing::Role::SearchRequest::Market
 Bing::Role::SearchRequest::Version
 Bing::Role::SearchRequest::Adult
@@ -21,6 +19,6 @@ Bing::Role::PhonebookRequest::LocId
 Bing::Role::PhonebookRequest::SortBy
 );
 
-
+sub _build_source_name { 'Phonebook' }
 
 __PACKAGE__->meta->make_immutable;

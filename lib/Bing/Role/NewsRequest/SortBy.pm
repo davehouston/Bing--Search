@@ -25,7 +25,7 @@ before 'build_request' => sub {
    my $self = shift;
    if( $self->has_News_SortBy ) { 
       my $hash = $self->params;
-      $hash->{'News.SortBy'} = $self->News_SortBy
+      $hash->{'News.SortBy'} = $self->News_SortBy;
       $self->params( $hash );
    }
 };

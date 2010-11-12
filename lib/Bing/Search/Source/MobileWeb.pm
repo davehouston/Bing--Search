@@ -5,8 +5,6 @@ extends 'Bing::Search::Source';
 with 'Bing::Role::MobileWebRequest::Count';
 
 with qw(
-Bing::Role::SearchRequest::AppId
-Bing::Role::SearchRequest::Query
 Bing::Role::SearchRequest::Market
 Bing::Role::SearchRequest::Version
 Bing::Role::SearchRequest::Latitude
@@ -16,6 +14,6 @@ Bing::Role::MobileWebRequest::Offset
 Bing::Role::MobileWebRequest::Options
 );
 
-
+sub _build_source_name { 'MobileWeb' }
 
 __PACKAGE__->meta->make_immutable;

@@ -30,6 +30,8 @@ around 'Web_FileType' => sub {
       } else { 
          carp "Unsupported file type $param -- ignoring.";
       }
+   } else { 
+      $self->$next();
    }
 
 };

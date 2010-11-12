@@ -14,12 +14,11 @@ has 'News_Offset' => (
 
 before 'News_Offset' => sub { 
    my( $self, $param ) = @_;
-   unless( $param <= 1000 && $param >= 0 ) { 
-      croak "News.Offset value of $param must be between 0 and 1,000.";      
+   return unless $param;
+   if( $param <= 0 ) { 
+      croak "Offset must be positive.";
    }
-   if( $self->News_Count + $param > 1000 ) { 
-      croak "The sum of News.Count and News.Offset may not exceed 1,000.";
-   }
+
 };
 
 before 'build_request' => sub { 

@@ -25,7 +25,7 @@ before 'build_request' => sub {
    my $self = shift;
    if( $self->has_Video_SortBy ) { 
       my $hash = $self->params;
-      $hash->{'Video.SortBy'} = $self->Video_SortBy
+      $hash->{'Video.SortBy'} = $self->Video_SortBy;
       $self->params( $hash );
    }
 };
