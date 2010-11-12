@@ -4,6 +4,7 @@ use URI;
 use URI::QueryParam;
 use Carp;
 use LWP::UserAgent;
+use JSON;
 use vars qw($VERSION);
 
 $VERSION = "0.0001";
@@ -59,11 +60,17 @@ sub search {
    unless( $response->is_success ) { 
       croak "Failed request: $!";
    }
-  
- 
-
+   
+   my $j = JSON->new->decode( $response->content );
+   $self->_parse_json( $j );
 }
 
+sub _parse_json {
+   # Debugging!
+   use Data::Dumper;
+   my( $self, $json ) = @_;
+   print STDERR "\n\n\n\nEVERYONE HERE IS SOME DECODED JOSN\n\n" . Dumper( $json );
+}
 
 sub _make_uri { 
    my ($self) = @_;
