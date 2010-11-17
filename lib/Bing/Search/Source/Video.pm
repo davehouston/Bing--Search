@@ -2,16 +2,16 @@ package Bing::Search::Source::Video;
 use Moose;
 extends 'Bing::Search::Source';
 
-with 'Bing::Role::VideoRequest::Count';
+with 'Bing::Search::Role::VideoRequest::Count';
 
 with qw(
-Bing::Role::SearchRequest::Market
-Bing::Role::SearchRequest::Version
-Bing::Role::SearchRequest::Options
-Bing::Role::SearchRequest::Adult
-Bing::Role::VideoRequest::Offset
-Bing::Role::VideoRequest::Filter
-Bing::Role::VideoRequest::SortBy
+Bing::Search::Role::SearchRequest::Market
+Bing::Search::Role::SearchRequest::Version
+Bing::Search::Role::SearchRequest::Options
+Bing::Search::Role::SearchRequest::Adult
+Bing::Search::Role::VideoRequest::Offset
+Bing::Search::Role::VideoRequest::Filter
+Bing::Search::Role::VideoRequest::SortBy
 );
 
 sub _build_source_name { 'Video' }

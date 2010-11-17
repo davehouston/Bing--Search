@@ -2,22 +2,23 @@ package Bing::Search::Source::Image;
 use Moose;
 extends 'Bing::Search::Source';
 
-with 'Bing::Role::ImageRequest::Count';
+with 'Bing::Search::Role::ImageRequest::Count';
 
 with qw(
-Bing::Role::SearchRequest::Market
-Bing::Role::SearchRequest::Adult
-Bing::Role::SearchRequest::Version
-Bing::Role::SearchRequest::Latitude
-Bing::Role::SearchRequest::Longitude
-Bing::Role::SearchRequest::Options
+Bing::Search::Role::SearchRequest::Market
+Bing::Search::Role::SearchRequest::Adult
+Bing::Search::Role::SearchRequest::Version
+Bing::Search::Role::SearchRequest::Latitude
+Bing::Search::Role::SearchRequest::Longitude
+Bing::Search::Role::SearchRequest::Options
 );
 
 with qw(
-Bing::Role::ImageRequest::Offset
-Bing::Role::ImageRequest::Filter
+Bing::Search::Role::ImageRequest::Offset
+Bing::Search::Role::ImageRequest::Filter
 );
 
 sub _build_source_name { 'Image' }
 
 __PACKAGE__->meta->make_immutable;
+

@@ -4,10 +4,10 @@ extends 'Bing::Search::Source';
 
 
 with qw(
-Bing::Role::SearchRequest::Market
-Bing::Role::SearchRequest::Version
-Bing::Role::SearchRequest::Latitude
-Bing::Role::SearchRequest::Longitude
+Bing::Search::Role::SearchRequest::Market
+Bing::Search::Role::SearchRequest::Version
+Bing::Search::Role::SearchRequest::Latitude
+Bing::Search::Role::SearchRequest::Longitude
 );
 
 sub _build_source_name { 'InstantAnswer' }

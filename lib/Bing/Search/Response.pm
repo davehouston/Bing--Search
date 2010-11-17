@@ -41,7 +41,7 @@ sub _parse {
    my $data = $self->data;
    my @sets;
    for my $set ( keys %{$data->{SearchResponse}} ) { 
-      my $class = 'Bing::Search::Result::' . $set;
+      my $class = 'Bing::Search::ResultSet::' . $set;
       eval "require $class" or croak $@;
       push @sets, $class->new( data => $data->{SearchResponse->{$data} );
    }

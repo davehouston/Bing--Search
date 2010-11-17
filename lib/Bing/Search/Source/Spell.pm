@@ -4,9 +4,9 @@ extends 'Bing::Search::Source';
 
 
 with qw(
-Bing::Role::SearchRequest::Market
-Bing::Role::SearchRequest::Version
-Bing::Role::SearchRequest::Options
+Bing::Search::Role::SearchRequest::Market
+Bing::Search::Role::SearchRequest::Version
+Bing::Search::Role::SearchRequest::Options
 );
 
 sub _build_source_name { 'Spell' }

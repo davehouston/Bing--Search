@@ -4,8 +4,8 @@ extends 'Bing::Search::Source';
 
 
 with qw(
-Bing::Role::TranslationRequest::SourceLanguage
-Bing::Role::TranslationRequest::TargetLanguage
+Bing::Search::Role::TranslationRequest::SourceLanguage
+Bing::Search::Role::TranslationRequest::TargetLanguage
 );
 
 sub _build_source_name { 'Translation' }

@@ -11,3 +11,5 @@ has 'data' => (
 sub _populate { 
    # nothing here but us chickens
 }
+
+__PACKAGE__->meta->make_immutable;
