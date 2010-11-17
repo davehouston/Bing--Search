@@ -24,8 +24,10 @@ has 'result_sets' => (
    default => sub { [] }
 );
 
-with 'Bing::Role::SearchResponse::Version';
-with 'Bing::Role::SearchResponse::Query';
+with 'Bing::Search::Role::Response::Version';
+with 'Bing::Search::Role::Response::Query';
+with 'Bing::Search::Role::Response::AlterationOverride';
+
 
 sub results { 
    my $self = shift;
