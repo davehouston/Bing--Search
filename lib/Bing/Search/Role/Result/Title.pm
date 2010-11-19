@@ -1,17 +1,15 @@
-package Bing::Search::Role::Result::FileSize;
+package Bing::Search::Role::Result::Title;
 use Moose::Role;
-
-
 requires 'data';
 requires '_populate';
 
-has 'FileSize' => ( is => 'rw', isa => 'Num' );
+has 'Title' => ( is => 'rw', isa => 'Num' );
 
 before '_populate' => sub { 
    my $self = shift;
    my $data = $self->data;
-   my $size = delete $data->{FileSize};
-   $self->FileSize( $size );
+   my $title = delete $data->{Title};
+   $self->Title( $title );
    $self->data( $data );
 };
 

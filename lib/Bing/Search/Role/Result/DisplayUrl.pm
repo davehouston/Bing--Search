@@ -1,22 +1,25 @@
-package Bing::Search::Role::Result::Url;
+package Bing::Search::Role::Result::DisplayUrl;
 use Moose::Role;
 use Moose::Util::TypeConstraints;
-use URI;
 
-with 'Bing::Search::Role::Types::UrlType';
+requires 'data';
+requires '_populate';
 
-has 'Url' => (
+
+has 'DisplayUrl' => (
    is => 'rw',
    isa => 'Bing::Search::UrlType',
    coerce => 1
 );
 
+
 before '_populate' => sub { 
    my( $self ) = @_;
    my $data = $self->data;
-   my $url = delete $data->{Url};
-   $self->Url( $url );
+   my $display = delete $data->{DisplayUrl};
+   $self->DisplayUrl( $display );
    $self->data( $data );
 };
+
 
 1;

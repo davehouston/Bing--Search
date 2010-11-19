@@ -1,21 +1,21 @@
-package Bing::Search::Role::Result::Url;
+package Bing::Search::Role::Result::MediaUrl;
 use Moose::Role;
 use Moose::Util::TypeConstraints;
-use URI;
 
-with 'Bing::Search::Role::Types::UrlType';
+requires 'data';
+requires '_populate';
 
-has 'Url' => (
+has 'MediaUrl' => (
    is => 'rw',
    isa => 'Bing::Search::UrlType',
    coerce => 1
 );
 
 before '_populate' => sub { 
-   my( $self ) = @_;
+   my $self = shift;
    my $data = $self->data;
-   my $url = delete $data->{Url};
-   $self->Url( $url );
+   my $murl = delete $data->{MediaUrl};
+   $self->MediaUrl( $murl );
    $self->data( $data );
 };
 

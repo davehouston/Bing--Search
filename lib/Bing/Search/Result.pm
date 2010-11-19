@@ -1,6 +1,8 @@
 package Bing::Search::Result;
 use Moose;
 
+with 'Bing::Search::Role::Types::UrlType';
+
 has 'data' => ( 
    is => 'rw',
    isa => 'HashRef',
