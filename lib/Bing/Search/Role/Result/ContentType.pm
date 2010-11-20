@@ -12,7 +12,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $ctype = delete $data->{ContentType};
    $self->ContentType( $ctype );
-   $self->data( $data );
 };
 
 1;

@@ -12,7 +12,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $attr = delete $data->{Attribution};
    $self->Attribution( $attr );
-   $self->data( $data );
 };
 
 1;

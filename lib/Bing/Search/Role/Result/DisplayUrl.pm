@@ -18,7 +18,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $display = delete $data->{DisplayUrl};
    $self->DisplayUrl( $display );
-   $self->data( $data );
 };
 
 

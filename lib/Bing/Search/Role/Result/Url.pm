@@ -16,7 +16,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $url = delete $data->{Url};
    $self->Url( $url );
-   $self->data( $data );
 };
 
 1;

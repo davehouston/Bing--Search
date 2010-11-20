@@ -10,7 +10,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $width = delete $data->{Width};
    $self->Width( $width );
-   $self->data( $data );
 };
 
 1;

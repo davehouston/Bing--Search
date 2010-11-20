@@ -16,7 +16,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $murl = delete $data->{MediaUrl};
    $self->MediaUrl( $murl );
-   $self->data( $data );
 };
 
 1;

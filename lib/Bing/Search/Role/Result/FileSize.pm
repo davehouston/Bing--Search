@@ -12,7 +12,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $size = delete $data->{FileSize};
    $self->FileSize( $size );
-   $self->data( $data );
 };
 
 1;

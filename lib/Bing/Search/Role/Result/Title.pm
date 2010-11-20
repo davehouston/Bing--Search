@@ -10,7 +10,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $title = delete $data->{Title};
    $self->Title( $title );
-   $self->data( $data );
 };
 
 1;

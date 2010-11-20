@@ -11,7 +11,6 @@ before '_populate' => sub {
    my $data = $self->data;
    my $height = delete $data->{Height};
    $self->Height( $height );
-   $self->data( $data );
 };
 
 1;
