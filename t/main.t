@@ -13,12 +13,10 @@ ok( $search->Query('rocks balls'), 'Setting query');
 use_ok( 'Bing::Search::Source::Web' );
 use_ok( 'Bing::Search::Source::Image' );
 use_ok( 'Bing::Search::Source::News' );
-
 #my $source = new_ok('Bing::Search::Source::Web');
 my $source = new_ok( 'Bing::Search::Source::News' );
 
 ok( $search->add_source( $source ), 'Adding source' );
-ok( $search->add_source( Bing::Search::Source::Image->new ) );
 my $res = $search->search();
 
 

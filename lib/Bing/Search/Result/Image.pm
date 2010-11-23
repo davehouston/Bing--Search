@@ -24,6 +24,8 @@ before '_populate' => sub {
    my $t = Bing::Search::Result::Image::Thumbnail->new;
    my $thumbdata = delete $data->{Thumbnail};
    $t->data( $thumbdata );
+   $t->_populate();
+   $self->Thumbnail( $t );
 };
 
 __PACKAGE__->meta->make_immutable;

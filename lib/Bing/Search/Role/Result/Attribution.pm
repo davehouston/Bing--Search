@@ -5,7 +5,7 @@ use Moose::Role;
 requires 'data';
 requires '_populate';
 
-has 'Attribution' => ( is => 'rw', isa => 'Num' );
+has 'Attribution' => ( is => 'rw' );
 
 before '_populate' => sub { 
    my $self = shift;
