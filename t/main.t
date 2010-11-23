@@ -14,8 +14,9 @@ use_ok( 'Bing::Search::Source::Web' );
 use_ok( 'Bing::Search::Source::Image' );
 use_ok( 'Bing::Search::Source::News' );
 use_ok( 'Bing::Search::Source::Phonebook' );
+use_ok( 'Bing::Search::Source::RelatedSearch' );
 #my $source = new_ok('Bing::Search::Source::Web');
-my $source = new_ok( 'Bing::Search::Source::Phonebook' );
+my $source = new_ok( 'Bing::Search::Source::RelatedSearch' );
 
 ok( $search->add_source( $source ), 'Adding source' );
 my $res = $search->search();
