@@ -9,7 +9,7 @@ before '_populate' => sub {
    my $self = shift;
    my $data = $self->data;
    my $width = delete $data->{Width};
-   $self->Width( $width );
+   $self->Width( $width ) if $width;
 };
 
 1;

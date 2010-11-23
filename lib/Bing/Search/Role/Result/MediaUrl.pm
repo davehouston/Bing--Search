@@ -15,7 +15,7 @@ before '_populate' => sub {
    my $self = shift;
    my $data = $self->data;
    my $murl = delete $data->{MediaUrl};
-   $self->MediaUrl( $murl );
+   $self->MediaUrl( $murl ) if $murl;
 };
 
 1;

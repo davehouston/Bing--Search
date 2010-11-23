@@ -11,7 +11,7 @@ before '_populate' => sub {
    my $self = shift;
    my $data = $self->data;
    my $size = delete $data->{FileSize};
-   $self->FileSize( $size );
+   $self->FileSize( $size ) if $size;;
 };
 
 1;

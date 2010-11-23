@@ -1,15 +1,15 @@
-package Bing::Search::Role::Result::Title;
+package Bing::Search::Role::Result::Snippet;
 use Moose::Role;
 requires 'data';
 requires '_populate';
 
-has 'Title' => ( is => 'rw' );
+has 'Snippet' => ( is => 'rw' );
 
 before '_populate' => sub { 
    my $self = shift;
    my $data = $self->data;
-   my $title = delete $data->{Title};
-   $self->Title( $title );
+   my $snip = delete $data->{Snippet};
+   $self->Title( $snip);
 };
 
 1;

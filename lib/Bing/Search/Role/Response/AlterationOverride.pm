@@ -1,6 +1,6 @@
-package Bing::Search::Role::Response::AlterativeOverride;
+package Bing::Search::Role::Response::AlterationOverride;
 use Moose::Role;
 
-has 'AlterativeOverride' => ( is => 'rw', isa => 'Str' );
+has 'AlterationOverride' => ( is => 'rw', isa => 'Str' );
 
 1;

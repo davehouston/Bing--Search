@@ -1,53 +1,51 @@
 package Bing::Search::Response;
 use Carp;
 use Moose;
-use Moose::Util::TypeConstraint;
+use Moose::Util::TypeConstraints;
 use JSON;
 
 subtype 'Bing::Search::Response::Types::JSON'
-   => as class_type('JSON');
+      => as 'HashRef';
 
 coerce 'Bing::Search::Response::Types::JSON'
    => from 'Str'
    => via { decode_json( $_ ) };
 
 has 'data' => ( 
-   is => 'rw'
+   is => 'rw',
    coerce => 1,
    isa => 'Bing::Search::Response::Types::JSON',
    trigger => \&_parse
-);
-
-has 'result_sets' => (
-   is => 'rw',
-   isa => 'ArrayRef[Bing::Search::ResultSet]',
-   default => sub { [] }
 );
 
 with 'Bing::Search::Role::Response::Version';
 with 'Bing::Search::Role::Response::Query';
 with 'Bing::Search::Role::Response::AlterationOverride';
 
-
-sub results { 
-   my $self = shift;
-   my @list;
-   for( @{$self->result_sets} ) { 
-      push @list, @{$_->resuls};
-   }
-   return @list;
-}
+has 'results' => ( 
+   is => 'rw',
+   isa => 'ArrayRef[Bing::Search::Result]',
+   default => sub { [] }
+);
 
 sub _parse { 
    my $self = shift;
    my $data = $self->data;
    my @sets;
-   for my $set ( keys %{$data->{SearchResponse}} ) { 
-      my $class = 'Bing::Search::ResultSet::' . $set;
+   for my $set ( keys %{$data->{SearchResponse}} ) {
+      next if $set eq 'Query';
+      next if $set eq 'Version';
+      next if $set eq 'AlternationOverride';
+      my $class = 'Bing::Search::Result::' . $set;
       eval "require $class" or croak $@;
-      push @sets, $class->new( data => $data->{SearchResponse->{$data} );
+      my $result_list = delete $data->{SearchResponse}->{$set}->{Results};
+      for my $res ( @$result_list ) { 
+         my $ob = $class->new( data => $res );
+         $ob->_populate;
+         push @sets, $ob;
+      }
    }
-   $self->result_sets( \@sets );
+   $self->results( \@sets );
 }  
 
 __PACKAGE__->meta->make_immutable;

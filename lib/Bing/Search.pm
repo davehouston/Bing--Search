@@ -5,6 +5,7 @@ use URI::QueryParam;
 use Carp;
 use LWP::UserAgent;
 use JSON;
+use Bing::Search::Response;
 use vars qw($VERSION);
 
 $VERSION = "0.0001";
@@ -69,7 +70,10 @@ sub _parse_json {
    # Debugging!
    use Data::Dumper;
    my( $self, $json ) = @_;
-   print STDERR "\n\n\n\nEVERYONE HERE IS SOME DECODED JOSN\n\n" . Dumper( $json );
+   #print STDERR "\n\n\n\nEVERYONE HERE IS SOME DECODED JOSN\n\n" . Dumper( $json );
+   my $resp = Bing::Search::Response->new( data => $json );
+   print STDERR "\n\n\n\n\n\n****************\n\n*****************\n\n" . Dumper( $resp );
+   
 }
 
 sub _make_uri { 

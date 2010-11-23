@@ -1,24 +1,19 @@
-package Bing::Search::Role::Result::DisplayUrl;
+package Bing::Search::Role::Result::CacheUrl;
 use Moose::Role;
 use Moose::Util::TypeConstraints;
+use URI;
 
-requires 'data';
-requires '_populate';
-
-
-has 'DisplayUrl' => (
+has 'CacheUrl' => (
    is => 'rw',
    isa => 'Bing::Search::UrlType',
    coerce => 1
 );
 
-
 before '_populate' => sub { 
    my( $self ) = @_;
    my $data = $self->data;
-   my $display = delete $data->{DisplayUrl};
-   $self->DisplayUrl( $display ) if $display;;
+   my $url = delete $data->{CacheUrl};
+   $self->CacheUrl( $url ) if $url;
 };
-
 
 1;

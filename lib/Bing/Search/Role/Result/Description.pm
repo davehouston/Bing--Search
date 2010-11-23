@@ -3,7 +3,7 @@ use Moose::Role;
 requires 'data';
 requires '_populate';
 
-has 'Description' => ( is => 'rw', isa => 'Num' );
+has 'Description' => ( is => 'rw' );
 
 before '_populate' => sub { 
    my $self = shift;

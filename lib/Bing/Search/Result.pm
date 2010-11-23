@@ -5,9 +5,8 @@ with 'Bing::Search::Role::Types::UrlType';
 
 has 'data' => ( 
    is => 'rw',
-   isa => 'HashRef',
-   required => 1,
-   trigger => \&_populate;
+   builder => '_populate'
+#   trigger => \&_populate
 );
 
 sub _populate { 

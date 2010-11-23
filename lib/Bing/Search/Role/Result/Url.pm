@@ -1,9 +1,5 @@
 package Bing::Search::Role::Result::Url;
 use Moose::Role;
-use Moose::Util::TypeConstraints;
-use URI;
-
-with 'Bing::Search::Role::Types::UrlType';
 
 has 'Url' => (
    is => 'rw',
@@ -15,7 +11,7 @@ before '_populate' => sub {
    my( $self ) = @_;
    my $data = $self->data;
    my $url = delete $data->{Url};
-   $self->Url( $url );
+   $self->Url( $url ) if $url;
 };
 
 1;

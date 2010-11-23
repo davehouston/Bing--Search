@@ -1,4 +1,4 @@
-pakcage Bing::Search::Result::Image::Thumbnail;
+package Bing::Search::Result::Image::Thumbnail;
 use Moose;
 
 extends 'Bing::Search::Result';

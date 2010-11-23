@@ -9,6 +9,7 @@ subtype 'Bing::Search::DateType'
 coerce 'Bing::Search::DateType'
    => from 'Str'
    => via { 
-      # BALLS      
+      DateTime::Format::DateParse->parse_datetime( $_ ) 
    };
 
+1;

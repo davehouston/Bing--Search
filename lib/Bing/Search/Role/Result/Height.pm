@@ -10,7 +10,7 @@ before '_populate' => sub {
    my $self = shift;
    my $data = $self->data;
    my $height = delete $data->{Height};
-   $self->Height( $height );
+   $self->Height( $height ) if $height;
 };
 
 1;

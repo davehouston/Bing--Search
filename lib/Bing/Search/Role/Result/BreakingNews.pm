@@ -12,3 +12,5 @@ before '_populate' => sub {
    my $breaking = delete $data->{BreakingNews};
    $self->BreakingNews( $breaking );
 };
+
+1;
