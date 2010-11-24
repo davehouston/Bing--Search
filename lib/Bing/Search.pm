@@ -70,10 +70,8 @@ sub _parse_json {
    # Debugging!
    use Data::Dumper;
    my( $self, $json ) = @_;
-   #print STDERR "\n\n\n\nEVERYONE HERE IS SOME DECODED JOSN\n\n" . Dumper( $json );
    my $resp = Bing::Search::Response->new( data => $json );
-   print STDERR "\n\n\n\n\n\n****************\n\n*****************\n\n" . Dumper( $resp );
-   
+  
 }
 
 sub _make_uri { 
@@ -83,10 +81,15 @@ sub _make_uri {
    }
    my $uri = URI->new( 'http://api.bing.net/json.aspx' );
    my @source_names;
-   for my $source ( @{$self->sources} ) { 
-      $uri->query_param_append( 
-         $source->build_request
-      );
+   for my $source ( @{$self->sources} ) {
+      my $req = $source->build_request;
+      for my $source_key ( keys %$req ) {
+         if( ref $req->{$source_key} eq 'ARRAY' ) { 
+            $uri->query_param_append( $source_key => $_ ) for @{$req->{$source_key}};
+         } else { 
+            $uri->query_param_append( $source_key => $req->{$source_key} );
+         }
+      }
       push @source_names, $source->source_name;
    }
    $uri->query_param_append( 'Sources' => @source_names );

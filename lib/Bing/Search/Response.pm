@@ -38,7 +38,12 @@ sub _parse {
       next if $set eq 'AlternationOverride';
       my $class = 'Bing::Search::Result::' . $set;
       eval "require $class" or croak $@;
-      my $result_list = delete $data->{SearchResponse}->{$set}->{Results};
+      my $result_list;
+      if( $set eq 'Errors' ) { 
+         $result_list = delete $data->{SearchResponse}->{$set};
+      } else { 
+         $result_list = delete $data->{SearchResponse}->{$set}->{Results};
+      }
       for my $res ( @$result_list ) { 
          my $ob = $class->new( data => $res );
          $ob->_populate;
