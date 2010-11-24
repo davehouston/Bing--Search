@@ -8,6 +8,7 @@ with qw(
 Bing::Search::Role::SearchRequest::Market
 Bing::Search::Role::SearchRequest::Version
 Bing::Search::Role::SearchRequest::Adult
+Bing::Search::Role::SearchRequest::Options
 Bing::Search::Role::VideoRequest::Offset
 Bing::Search::Role::VideoRequest::Filter
 Bing::Search::Role::VideoRequest::SortBy
