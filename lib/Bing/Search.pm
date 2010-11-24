@@ -71,7 +71,7 @@ sub _parse_json {
    use Data::Dumper;
    my( $self, $json ) = @_;
    my $resp = Bing::Search::Response->new( data => $json );
-  
+   $self->response( $resp  );
 }
 
 sub _make_uri { 
@@ -110,3 +110,204 @@ sub add_source {
 
 
 __PACKAGE__->meta->make_immutable;
+
+=head1 NAME
+
+Bing::Search - Implements the Bing AJAX Search API
+
+=head1 SYNOPSIS
+
+    use Bing::Search;
+    use Bing::Search::Source::Web;
+
+    my $search = Bing::Search->new(
+      AppId => '1234567890',
+      Query => 'Rocks'
+    );
+    
+    my $source = Bing::Search::Source::Web->new();
+
+    $search->add_source( $source );
+
+    my $response = $search->search();
+
+    print $_->Url for @{$response->results};
+
+=head1 DESCRIPTION
+
+This set of modules implements most of the Bing Search API.  See the
+L</"UNIMPLEMENTED BITS"> for what's missing.  This is an object-oriented
+monstrosity, intended to be easily extendible when the API changes.  Since
+we all know who made Bing, we B<know> that's going to change.
+
+=head2 Really Important Note
+
+The Bing API B<requires> an AppId.  If you intend to use the API, you must
+provide an AppId.  You may obtain one by visiting L<http://www.bing.com/developers/createapp.aspx>.
+Please ensure you've read the terms and whatnot.  
+
+=head2 The Quick And Easy Way
+
+First, create a search object.
+
+    my $search = Bing::Search->new();
+
+And give it your AppId.  (See L</"Really Important Note">)
+
+    $search->AppId('1234567890');
+
+You almost always need to be searching for something, so:
+
+    $search->Query('rocks');
+
+Finally, Bing needs to know where to look for your rocks.  This is done by supplying
+a C<Source> object.  You can add more than one type, but try not to add the same type 
+more than once.  Poor Bing gets confused.
+
+    $search->add_source( 
+      Bing::Search::Source::Web->new
+    );
+
+Once that's done, you're ready to wander out into the wilds of the internet and 
+do your search.
+
+    my $response = $search->search();
+
+You may have to wait a second.  Sometimes the internet is slow.  But now, 
+you're ready to examine your results.
+   
+
+    foreach my $result ( @{$response->results} ) { 
+      print $result->Title, " -> ", $result->Url, "\n";
+    }
+
+=head1 METHODS
+
+=over 3
+
+=item C<search>
+
+Does the actual searching.  Any parameters are ignored.  Returns a 
+L<Bing::Search::Response> object.
+
+=item C<AppId>
+
+B<Required>.  Sets the AppId.  
+
+=item C<Query>
+
+Sets the query string.
+
+=item C<add_source>
+
+Accepts a L<Bing::Search::Source> object, adds it to the list of sources.
+
+=back
+
+There are also some methods that you probably don't want to fiddle with.  In fact,
+fiddling with them might break something.  Don't do it, man!
+
+=over 3
+
+=item C<sources>
+
+An arrayref of C<Bing::Search::Source::*> objects.  Try not to change this yourself.
+
+=item C<request_obj>
+
+A L<URI> object.  This is what ends up getting sent out over the internet.  Careful,
+it changes a lot when you're not looking.
+
+=item C<agent>
+
+A L<LWP::UserAgent> object.  Used to make the request.  This has a default agent string 
+of "bing-search/$VERSION libwww-perl"
+
+=item C<_parse_json>
+
+As with all methods beginning with _, don't fiddle with it.  It does what it says
+on the tin.
+
+=item C<_make_uri>
+
+Called by C<search> to generate the URI object and fiddle with the query string.  
+Again, what it says on the tin.  
+
+=back
+
+
+=head1 SOURCES
+
+L<Bing::Search>>Source> objects what what tell Bing what sort of things to look for.  
+The return value of the C<search> method is a L<Bing::Search::Response> object, which 
+among other things contains some L<Bing::Search::Result> objects.  The sources you 
+specifiy determine what results you'll end up with.
+
+Sources currently implemented:
+
+L<Bing::Search::Source::Image>, L<Bing::Search::Source::InstantAnswer>,
+L<Bing::Search::Source::MobileWeb>, L<Bing::Search::Source::News>,
+L<Bing::Search::Source::Phonebook>, L<Bing::Search::Source::RelatedSearch>,
+L<Bing::Search::Source::Spell>, L<Bing::Search::Source::Translation>,
+L<Bing::Search::Source::Video>, L<Bing::Search::Source::Web>
+
+You should consult the documentation for each source you intend on using, as some have 
+various options you may find useful.  Some, like L<Bing::Search::Source::Translation>
+have some required options you B<must> set.
+
+=head1 RESULTS
+
+L<Bing::Search::Result> objects are what you've been looking for.  They contain the 
+well-parsed data from your query.  To determine what methods are available to you, 
+you should check each object's type.  I suggest using the built-in C<ref> function.
+
+A notable exception is the L<Bing::Search::Result::Errors> result.  It occurs whenever
+Bing spits out an error of some sort.  Remember to check for it if things aren't
+doing what you think they should.
+
+Currently implemented Results:
+
+L<Bing::Search::Result::Errors>, L<Bing::Search::Result::Image>, 
+L<Bing::Search::Result::Image::Thumbnail>, L<Bing::Search::Result::MobileWeb>, 
+L<Bing::Search::Result::InstantAnswer>, L<Bing::Search::Result::InstantAnswer::Encarta>, 
+L<Bing::Search::Result::InstantAnswer::FlighStatus>, L<Bing::Search::Result::News>, 
+L<Bing::Search::Result::Phonebook>, L<Bing::Search::Result::RelatedSearch>, 
+L<Bing::Search::Result::Spell>, L<Bing::Search::Result::Translation>, 
+L<Bing::Search::Result::Video>, L<Bing::Search::Result::Video::StaticThumbnail>, 
+L<Bing::Search::Result::Web>
+
+=head1 UNIMPLEMENTED BITS
+
+I got lazy and opted to not bother implementing a few small bits of the API,
+mostly because I got distracted by video games or a shiny piece of metal.  
+Future versions, if I ever get around to it, may have these bits implemented.
+
+Also, patches welcome.
+
+=head2 Currently unimplemented
+
+=over 3
+
+=item The C<AdSource> Source is not implemented.  This is a design decision.
+
+=item In the Video and Image's C<Filter> sections, the custom Height and Width
+fitlers are not implemented.  The pre-defined filters remain.
+
+=back 
+
+=head1 BUGS
+
+Probably!  Patches welcome!
+
+=head1 SEE ALSO
+
+L<Moose>, L<URI>, L<LWP::UserAgent>, L<DateTime>, L<DatTime::Duration>, L<JSON>
+
+=head1 AUTHOR
+
+Dave Houston, L< dhouston@cpan.org >, 2010
+
+=head1 LICENSE
+
+This library is free software; you may redistribute and/or modify it under the same
+terms as Perl itself.

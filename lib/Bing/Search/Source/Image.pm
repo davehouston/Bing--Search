@@ -8,8 +8,6 @@ with qw(
 Bing::Search::Role::SearchRequest::Market
 Bing::Search::Role::SearchRequest::Adult
 Bing::Search::Role::SearchRequest::Version
-Bing::Search::Role::SearchRequest::Latitude
-Bing::Search::Role::SearchRequest::Longitude
 Bing::Search::Role::SearchRequest::Options
 );
 
@@ -22,3 +20,72 @@ sub _build_source_name { 'Image' }
 
 __PACKAGE__->meta->make_immutable;
 
+=head1 NAME
+
+Bing::Search::Source::Image - Image search for Bing::Search
+
+=head1 SYNOPSIS
+
+ my $source = Bing::Search::Source::Image->new(
+   Market => 'en-US',
+   Count => 1
+ );
+  
+=head1 METHODS
+
+=over 3
+
+=item C<Market>
+
+Accepts a string designating what market to perform the search in.  See 
+L<http://msdn.microsoft.com/en-us/library/dd251064.aspx> for the current
+list of valid markets.
+
+=item C<Adult>
+
+Indicates what sort of adult material filter should be applied by Bing.
+The value of C<Market> may affect this.  Valid options are "Off", 
+"Moderate", and "Strict".
+
+=item C<Version>
+
+Indicates which version of the Bing API to use.  If unset, the most recent
+version will be used.
+
+=item C<Image_Count>
+
+Indicates how many results to return.
+
+=item C<Image_Offset>
+
+Indicates on which result to start.  An value of '2', coupled with a 
+C<Count> of '10' would fetch results 2 through 12.  
+
+=item C<Image_Filter>
+
+Returns the list of current filters.  You may attempt to set the filters 
+yourself this way, keeping in mind the filters are simply an arrayref.  
+
+Using the C<setImage_Filter> method is the reccomended way to change
+the filters.
+
+See L<http://msdn.microsoft.com/en-us/library/dd560913.aspx> for details on 
+which filters are currently available.  Please note that, at the time
+of this writing, 'Size:Height:<Height>' and 'Size:Width:<Width>' filters
+are not implemented.  
+
+=item C<setImage_Filter>
+
+Changes the image filters.  The syntax is easy.  Prepend a - to the name
+of a filter to remove it.  Name it or prepend a + to add it.  
+
+=back
+
+=head1 AUTHOR
+
+Dave Houston, L< dhouston@cpan.org >, 2010
+
+=headd1 LICENSE
+
+This library is free software; you may redistribute and/or modify it under the 
+same terms as Perl itself.

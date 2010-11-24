@@ -13,3 +13,57 @@ Bing::Search::Role::SearchRequest::Longitude
 sub _build_source_name { 'InstantAnswer' }
 
 __PACKAGE__->meta->make_immutable;
+
+=head1 NAME
+
+Bing::Search::Source::InstantAnswer
+
+=head1 SYNOPSIS
+
+ my $source = Bing::Search::Source::InstantAnswer->new;
+
+=head1 DESCRIPTION
+
+The InstantAnswer Source will provide "instant" answers for two 
+very specific (as of right now) types of requests -- 
+one from Encarta (usually definitions of words) and for
+the airline flight status updates.
+
+In both cases, Bing chooses the proper result based on the 
+query.  The generally accepted -- but not guaranteed -- 
+method to get an Encarta result is to use a query like:
+
+ define rocks
+
+For flight status updates, the general format is the airline 
+code followed by the flight number.  For example, American Airlines
+flight 100 would be a query of:
+
+ aa100
+
+=head1 METHODS
+
+=over 3
+
+=item C<Market>
+
+Accepts a string designating what market to perform the search in.  See 
+L<http://msdn.microsoft.com/en-us/library/dd251064.aspx> for the current
+list of valid markets.
+
+=item C<Market>
+
+Accepts a string designating what market to perform the search in.  See 
+L<http://msdn.microsoft.com/en-us/library/dd251064.aspx> for the current
+list of valid markets.
+
+=back
+
+=head1 AUTHOR
+
+Dave Houston, L< dhouston@cpan.org >, 2010
+
+=head1 LICENSE
+
+This library is free software; you may redistribute and/or modify it
+under the same terms as Perl itself.

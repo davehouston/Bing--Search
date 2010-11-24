@@ -13,5 +13,8 @@ ok( $search->Query('yo quierro taco bell'), 'Setting query');
 my $source = new_ok( 'Bing::Search::Source::Web' );
 
 ok( $search->add_source( $source ), 'Adding Web source' );
+my $resp = $search->search;
+use Data::Dumper;
+note Dumper( $resp->results );
 
 done_testing();
