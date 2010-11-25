@@ -18,12 +18,6 @@ ok( $obj->setOption('+DisableLocationDetection'), 'Turning on DisableLocationDet
 ok( $obj->setOption('-DisableLocationDetection'), 'Turning it back off.');
    is_deeply( $obj->Options, [], 'Seeing if that stuck, too.');
 
-ok( $obj->Latitude(45), 'Setting the latitude');
-   is( $obj->Latitude(), '45', 'Still at 45?');
-
-ok( $obj->Longitude(73), 'Setting the longitude');
-   is( $obj->Longitude(), '73', 'Still at 73?');
-
 ok( $obj->Image_Count( 3 ), 'Start at the 3rd item..');
    is( $obj->Image_Count(), '3', 'Still at #3 baby.');
 

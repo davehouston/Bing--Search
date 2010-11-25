@@ -28,3 +28,49 @@ before '_populate' => sub {
 };
 
 __PACKAGE__->meta->make_immutable;
+
+=head1 NAME
+
+Bing::Search::Result::Video - Video search results
+
+=head1 METHODS
+
+=over 3
+
+=item C<Title>
+
+The name of the video.
+
+=item C<SourceTitle>
+
+The name of the video's source, ie, "Dailymotion" or "YouTube".
+
+=item C<PlayUrl>
+
+A L<URI> object representing a link to the original video file, if
+available.
+
+=item C<RunTime>
+
+A L<DateTime::Duration> object representing the video's play time.
+
+=item C<ClickThroughPageUrl>
+
+A L<URI> object representing a link to play the video via Bing's 
+"Video" page.
+
+=item C<StaticThumbnail>
+
+A L<Bing::Search::Result::Video::StaticThumbnail> object, 
+representing a static image thumbnail of the video.
+
+=back
+
+=head1 AUTHOR
+
+Dave Houston, L< dhouston@cpan.org >, 2010
+
+=head1 LICENSE
+
+This library is free software; you may redistribute and/or modify it under
+the same terms as Perl itself.

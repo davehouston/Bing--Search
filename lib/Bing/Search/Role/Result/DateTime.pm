@@ -3,9 +3,7 @@ use Moose::Role;
 requires 'data';
 requires '_populate';
 
-has 'DateTime' => ( is => 'rw' );
-
-# TODO: Seriously, parse this into a DateTime object
+has 'DateTime' => ( is => 'rw', isa => 'Bing::Search::DateType', coerce => 1 );
 
 before '_populate' => sub { 
    my $self = shift;
