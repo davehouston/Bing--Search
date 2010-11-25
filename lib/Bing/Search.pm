@@ -255,6 +255,67 @@ You should consult the documentation for each source you intend on using, as som
 various options you may find useful.  Some, like L<Bing::Search::Source::Translation>
 have some required options you B<must> set.
 
+=head2 Attributes Available to All Sources
+
+There are some attributes available to every source.  Which each Source may
+not implement each of the below, this is a key-saving technique.
+
+=over 3
+
+=item C<Market>
+
+The market the search is to take place in.  See L<http://msdn.microsoft.com/en-us/library/dd251064.aspx>
+for details about valid markets.  Bing will attempt to select the correct market automatically
+if none is provided.  
+
+=item C<Version>
+
+The version of the API you wish to use.  The default is "2.1".
+
+=item C<Adult>
+
+Indicates how to filter "adult" content.  Per L<http://msdn.microsoft.com/en-us/library/dd251007.aspx>,
+valid options are: "Off", "Moderate", and "Strict".  
+
+=item C<UILanguage>
+
+The langauge in which "user interface strings" are presented.  In most cases, this will
+not have affect your results or use of this module.  
+
+Valid language codes are available here:  L<http://msdn.microsoft.com/en-us/library/dd250941.aspx>.
+
+=item C<Latitude>
+
+Latitude for searches where location is relevant.  Valid values are between -90 and 90.
+
+=item C<Longitude>
+
+Similar to the Latitude option.  vcalud values are between -180 and 180.  
+
+=item C<Radius>
+
+For searches where a radius (for a location-based search) are relevant.  Valid values
+are from 0 to 250 miles.  The default value is 5.
+
+=item C<Options>
+
+Options is a strange beast, in that there are several "options" that may be set or 
+removed.  While you may set this directly (it is an arrayref), it's suggested that
+you use the handy function written up nicely for you, C<setOptions>.  
+
+Valid values are: B<DisableLocationDetection> and B<EnableHilighting>.  You almost 
+never need to set either of these. 
+
+=item C<setOptions>
+
+Accepts a single parameter, the name of an option.  Optionally prefixed with a C<->, 
+it will remove the option from the list.  For consistency's sake, prefixing an
+option with C<+> will add the option to the list.  C<+> is not required 
+to add an option.
+
+=back
+
+
 =head1 RESULTS
 
 L<Bing::Search::Result> objects are what you've been looking for.  They contain the 

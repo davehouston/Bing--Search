@@ -35,22 +35,9 @@ Bing::Search::Source::Image - Image search for Bing::Search
 
 =over 3
 
-=item C<Market>
+=item C<Market>, C<Adult>, C<Version>, C<Options>, C<setOptions>
 
-Accepts a string designating what market to perform the search in.  See 
-L<http://msdn.microsoft.com/en-us/library/dd251064.aspx> for the current
-list of valid markets.
-
-=item C<Adult>
-
-Indicates what sort of adult material filter should be applied by Bing.
-The value of C<Market> may affect this.  Valid options are "Off", 
-"Moderate", and "Strict".
-
-=item C<Version>
-
-Indicates which version of the Bing API to use.  If unset, the most recent
-version will be used.
+See L<Bing::Search> for details on these common methods.
 
 =item C<Image_Count>
 

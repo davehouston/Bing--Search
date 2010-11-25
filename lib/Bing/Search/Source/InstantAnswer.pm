@@ -45,17 +45,9 @@ flight 100 would be a query of:
 
 =over 3
 
-=item C<Market>
+=item C<Market>, C<Version>, C<Latitude>, C<Longitude>
 
-Accepts a string designating what market to perform the search in.  See 
-L<http://msdn.microsoft.com/en-us/library/dd251064.aspx> for the current
-list of valid markets.
-
-=item C<Market>
-
-Accepts a string designating what market to perform the search in.  See 
-L<http://msdn.microsoft.com/en-us/library/dd251064.aspx> for the current
-list of valid markets.
+See L<Bing::Search> for documentation of this common attributes.
 
 =back
 

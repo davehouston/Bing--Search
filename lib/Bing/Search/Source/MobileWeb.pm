@@ -24,15 +24,31 @@ Bing::Search::Source::MobileWeb - Source for MobileWeb documents
 
 =head1 METHODS
 
-Like all others, C<Market>, C<Version>, C<Latitude>, C<Longitude>, and C<Options>
-are standard.
-
 =over 3
+
+=item C<Market>, C<Version>, C<Latitude>, C<Longitude>, C<Options>, and C<setOptions>
+
+See L<Bing::Search> for documentation of this common attributes.
 
 =item C<MobileWeb_Count>, C<MobileWeb_Offset>
 
 The number of documents to return, and the offset.
 
-=item C<MobileWeb_Options>
+=item C<setMobileWeb_Option> and C<MobileWeb_Options>
 
-Like C<Options>, 
+Use the C<setMobileWeb_Option> method to set appropriate appropriate
+options.  The two valid options are: DisableHostCollapsing and DisableQueryAlterations.
+
+More information on what each of these does is available at
+L<http://msdn.microsoft.com/en-us/library/dd560917.aspx>
+
+=back
+
+=head1 AUTHOR
+
+Dave Houston, L< dhouston@cpan.org >, 2010
+
+=head1 LICENSE
+
+This library is free software; you may redistribute and/or modify it under
+the same terms as Perl itself.
