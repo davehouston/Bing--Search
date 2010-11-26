@@ -1,14 +1,14 @@
 package Bing::Search;
 use Moose 1.00;
-use URI;
+use URI 1.54;
 use URI::QueryParam;
 use Carp;
-use LWP::UserAgent;
-use JSON;
+use LWP::UserAgent 5.835;
+use JSON 2.21;
 use Bing::Search::Response;
 use vars qw($VERSION);
 
-$VERSION = "0.0001";
+$VERSION = "0.0002";
 $VERSION = eval $VERSION if $VERSION =~ /_/;
 
 has 'sources' => ( 
@@ -238,7 +238,7 @@ Again, what it says on the tin.
 
 =head1 SOURCES
 
-L<Bing::Search>>Source> objects what what tell Bing what sort of things to look for.  
+L<Bing::Search::Source> objects what what tell Bing what sort of things to look for.  
 The return value of the C<search> method is a L<Bing::Search::Response> object, which 
 among other things contains some L<Bing::Search::Result> objects.  The sources you 
 specifiy determine what results you'll end up with.

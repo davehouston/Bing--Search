@@ -16,7 +16,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Bing::Search::Result::Errors
+Bing::Search::Result::Errors - Error result
 
 =head1 DESCRIPTION
 

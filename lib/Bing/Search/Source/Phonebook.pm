@@ -25,7 +25,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Bing::Search::Source::Phonebook
+Bing::Search::Source::Phonebook - Phonebook lookups with Bing. 
 
 =head1 SYNOPSIS
 

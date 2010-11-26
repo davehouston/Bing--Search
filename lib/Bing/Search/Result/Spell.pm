@@ -12,7 +12,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Bing::Search::Result::Spell
+Bing::Search::Result::Spell - Let Bing spell for you.
 
 =head1 METHODS
 

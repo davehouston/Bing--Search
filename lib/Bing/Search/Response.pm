@@ -58,7 +58,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Bing::Search::Response - A response object for teh Bing AJAX Api
+Bing::Search::Response - A response object for the Bing AJAX Api
 
 =head1 SYNOPSIS
 

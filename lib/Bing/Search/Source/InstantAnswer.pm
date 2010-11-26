@@ -16,7 +16,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Bing::Search::Source::InstantAnswer
+Bing::Search::Source::InstantAnswer - Get "instant" answer from Bing
 
 =head1 SYNOPSIS
 
