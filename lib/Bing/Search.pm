@@ -358,7 +358,8 @@ fitlers are not implemented.  The pre-defined filters remain.
 
 =head1 BUGS
 
-Probably!  Patches welcome!
+Oh yeah.  And I bet these docs are full of typos and other broken 
+things, too.  I dare you to find them!  Patches welcome.
 
 =head1 SEE ALSO
 
