@@ -3,8 +3,6 @@ use Moose::Role;
 use Moose::Util::TypeConstraints;
 use URI;
 
-with 'Bing::Search::Role::Types::ClickThroughUrlType';
-
 has 'ClickThroughUrl' => (
    is => 'rw',
    isa => 'Bing::Search::UrlType',
