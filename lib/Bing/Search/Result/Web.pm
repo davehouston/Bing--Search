@@ -3,6 +3,7 @@ use Moose;
 extends 'Bing::Search::Result';
 
 with 'Bing::Search::Role::Types::UrlType';
+with 'Bing::Search::Role::Types::DateType';
 
 with qw(
    Bing::Search::Role::Result::Url
