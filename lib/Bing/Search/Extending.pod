@@ -1,0 +1,107 @@
+=head1 NAME
+
+Bing::Search::Extending - How to extend Bing::Search
+
+=head1 ARCHITECTURE
+
+This distribute tends to mirror (with some exceptions) the API documented 
+by Bing.  Each request is an atomic thing, and each request contains
+
+=over 4
+
+=item A query string
+
+=item One or more Sources
+
+=back
+
+The query string is fairy simple, and is a string containing the search terms.  Its
+specific contents vary depending on the sources being used.  For example, the query 
+string for a web document search may differ from the one used to find flight status.
+
+Each source is a "source" for the results.  The source determines the type of results
+returned by Bing.  As a related note, every request may have more than one Source.  Bing
+will tag the results with the proper result type when returnning them.   This distribute
+will also automatically locate and use the proper result class.
+
+=head1 SOURCES
+
+Each source is a fairly simple thing.  Simply create a class and inherit from the
+C<Bing::Search::Source> class.
+
+ package Bing::Search::Source::MySource;
+ use Moose;
+ extends 'Bing::Search::Source';
+
+ sub _build_source_name { 'MySource' }
+
+ 1;
+
+Next, add some roles.  Roles generally give your source some fields to 
+add to the URI.  Make sure you C<with> them in your Source class.   An 
+example Role might be something like:
+
+ package Bing::Search::Role::MyRequest::AField;
+ use Moose::Role;
+
+ requires 'build_request';
+ requires 'params';
+
+ has 'MyRequest_AField' => ( 
+   is => 'rw', 
+   predicate => 'has_MyRequest_AField' 
+ );
+
+ before 'build_request' => sub { 
+   my $self = shift;
+   if( $self->has_MyRequest_AField ) { 
+      $self->params->{'MyRequest.AField'} = $self->MyRequest_AField;
+   }
+ };
+
+ 1;
+
+Note that the value of the key in the C<params> hash is what is passed directly to 
+Bing.  Make sure Bing knows what it is, or you'll end up with a broken request.
+
+=head1 RESULTS
+
+The results follow a similar pattern.  Bing will return a very large JSON object, 
+which is parsed into a Perl data structure.  The type of data return causes Bing::Search
+to load the proper Result classes, instanciate an object with each result's data, which 
+recieves the bit of data as a hashref, stored in C<data>. 
+
+Each result object is responsible to parse the contents of C<data> into things, which is 
+accomplished by consuming various roles, all of which wrap before the C<_populate> method.
+
+A role should probably also include the attribute that it is populating.  That's just 
+polite.
+
+An exmaple result role:
+
+ package Bing::Search::Role::Result::Example;
+ use Moose::Role;
+
+ has 'Example' => ( is => 'rw' );
+
+ before '_populate' => sub { 
+   my $self = shift;
+   my $data = $self->data;
+   my $ex = delete $self->data->{Example};
+   $self->Example( $ex );
+ };
+
+ 1;
+
+Because Moose is kind of neat, the above will also depopulate the C<data> attribute
+as it goes; this is considered correct, as anything left when all the roles have 
+had their go at it should be irrelevent.  Or unimplemented.  Or a bug.
+
+=head1 AUTHOR
+
+Dave Houston, C<dhouston@cpan.org>, 2010
+
+=head1 LICENSE
+
+This library is free software; you may redistribute and/or modify it under
+the same terms as Perl itself.
