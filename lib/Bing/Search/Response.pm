@@ -37,7 +37,7 @@ sub _parse {
       next if $set eq 'Version';
       next if $set eq 'AlternationOverride';
       my $class = 'Bing::Search::Result::' . $set;
-      eval "require $class" or croak $@;
+      Class::MOP::load_class( $class ) or croak $@;
       my $result_list;
       if( $set eq 'Errors' ) { 
          $result_list = delete $data->{SearchResponse}->{$set};
