@@ -8,7 +8,7 @@ use JSON 2.21;
 use Bing::Search::Response;
 use vars qw($VERSION);
 
-$VERSION = "0.0002";
+$VERSION = "0.0003";
 $VERSION = eval $VERSION if $VERSION =~ /_/;
 
 has 'sources' => ( 
@@ -26,7 +26,9 @@ has 'request_obj' => (
 has 'agent' => ( 
    is => 'rw',
    isa => 'LWP::UserAgent',
-   default => sub {  LWP::UserAgent->new( agent => 'bing-search/' . $VERSION . ' libwww-perl' ) }
+   default => sub {  
+      LWP::UserAgent->new( agent => 'bing-search/' . $VERSION . ' libwww-perl' ) 
+   }
 );
 
 has 'AppId' => ( 

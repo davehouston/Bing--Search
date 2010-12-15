@@ -15,6 +15,7 @@ for my $source (qw(Image InstantAnswer MobileWeb News Phonebook RelatedSearch Sp
    
    my $search = new_ok( 'Bing::Search' );
    ok( $search->Query('Rocks'), 'Setting query for ' . $sourcename );
+
    ok( $search->AppId('GET YOUR OWN'), 'Setting AppId for ' . $sourcename );
    use_ok( $sourcename );
    my $obj = new_ok( $sourcename );
