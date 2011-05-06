@@ -57,7 +57,7 @@ sub search {
       $self->Query( shift @_ );
    } 
    $self->_make_uri;
-
+   $self->agent->env_proxy;
    $uri = $self->request_obj();
    my $response = $self->agent->get( $uri );
    unless( $response->is_success ) { 
@@ -370,6 +370,15 @@ L<Moose>, L<URI>, L<LWP::UserAgent>, L<DateTime>, L<DatTime::Duration>, L<JSON>
 =head1 AUTHOR
 
 Dave Houston, L< dhouston@cpan.org >, 2010
+
+=head1 CONTRIBUTORS
+
+=over 3
+
+=item Peter Edwards L<peter@dragonstaff.co.uk>
+
+=back
+
 
 =head1 LICENSE
 
