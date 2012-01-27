@@ -28,7 +28,7 @@ before 'build_request' => sub {
    my $self = shift;
    if( $self->has_Web_Offset ) { 
       my $hash = $self->params;
-      $hash->{'Web.Offset'} = $self->Web_Count;
+      $hash->{'Web.Offset'} = $self->Web_Offset;
       $self->params( $hash );
    }
 };
