@@ -12,7 +12,6 @@ with qw(
    Bing::Search::Role::Result::Description
    Bing::Search::Role::Result::DisplayUrl
    Bing::Search::Role::Result::Title
-   Bing::Search::Role::Result::Total
 );
 
 __PACKAGE__->meta->make_immutable;
