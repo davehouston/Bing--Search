@@ -8,7 +8,7 @@ use JSON 2.21;
 use Bing::Search::Response;
 use vars qw($VERSION);
 
-$VERSION = "0.0003";
+$VERSION = "0.0005";
 $VERSION = eval $VERSION if $VERSION =~ /_/;
 
 has 'sources' => ( 
