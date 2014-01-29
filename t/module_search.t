@@ -16,7 +16,21 @@ ok(
    'Check sources comma-based parsing' 
 );
 
-is( $obj->sources, 'web+images' );
+is( 
+   $obj->sources, 
+   'web+images',
+   'Get the properly-formatted sources result?'
+);
+
+ok( 
+   $obj->options( 'EnableHilighting, DisableLocationDetection'), 
+   'Can we set the options?'
+);
+
+is(
+   $obj->options,
+   'EnableHilighting+DisableLocationDetection'
+);
 
 is( 
    $obj->_endpoint, 
@@ -45,6 +59,6 @@ subtest 'Checking skip parameter' => sub {
 
 };
 
-
+is( $obj->_build_query, 'blarg' );
 done_testing();
 

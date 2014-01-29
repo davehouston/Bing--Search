@@ -25,6 +25,33 @@ sub BUILD {
    }
    __PACKAGE__->meta->make_immutable;
 }
+
+sub _build_query { 
+   my $self = shift;
+   my $uri = $self->_endpoint;
+   
+   # set the proper path
+   $uri->path_segments( $uri->path_segments, $self->service_operation );
+   
+   my $query_params = {};
+   # Find all the attributes with a RequestParam trait
+   for my $attr_name ( $self->meta->get_attribute_list ) { 
+      my $attribute = $self->meta->get_attribute( $attr_name );
+      if( $attribute->can('param') ) { 
+         next unless $self->$attr_name();
+         my $key = $attribute->param;
+         my $value = $self->$attr_name();
+         if( $attribute->should_quote ) { 
+            $value = "'$value'";
+         }
+         $query_params->{"$key"} = $value;
+      }
+   }
+
+   $uri->query_form( $query_params );
+   return "$uri";
+}
+
 # Type for the sources list
 subtype 'Bing::Search::OptionList' 
    => as 'ArrayRef';
@@ -36,7 +63,7 @@ subtype 'Bing::Search::URI'
 # Type coercion for the sources list.
 coerce 'Bing::Search::OptionList'
    => from 'Str'
-   => via { [split(/\s+|\+|,/)] };
+   => via { [  grep { $_ } split(/,|\s+/) ] };
 
 coerce 'Bing::Search::URI'
    => from 'Str'
