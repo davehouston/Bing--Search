@@ -24,7 +24,7 @@ is(
 
 ok( 
    $obj->options( 'EnableHilighting, DisableLocationDetection'), 
-   'Can we set the options?'
+   'Can we set the options? / comma-with-space parsing'
 );
 
 is(

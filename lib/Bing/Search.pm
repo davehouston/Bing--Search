@@ -4,6 +4,7 @@ use Moose::Util::TypeConstraints;
 use Bing::Search::Traits::RequestParam;
 use Bing::Search::Traits::ShouldQuote;
 use URI;
+use URI::Escape;
 use Data::Dumper;
 
 sub BUILD { 
@@ -26,7 +27,14 @@ sub BUILD {
    __PACKAGE__->meta->make_immutable;
 }
 
+
 sub _build_query { 
+   my $self = shift;
+   return $self->uri;
+}
+
+# Does the heavy lifting building a query.
+sub uri {    
    my $self = shift;
    my $uri = $self->_endpoint;
    
@@ -40,16 +48,20 @@ sub _build_query {
       if( $attribute->can('param') ) { 
          next unless $self->$attr_name();
          my $key = $attribute->param;
-         my $value = $self->$attr_name();
+         my $value = uri_escape( $self->$attr_name() );
+
          if( $attribute->should_quote ) { 
-            $value = "'$value'";
+            # this, and the ->query() method below are braindead; the Bing API
+            # requires ' be encoded; URI.pm disagrees.
+            $value = "%27$value%27";
          }
          $query_params->{"$key"} = $value;
       }
    }
-
-   $uri->query_form( $query_params );
-   return "$uri";
+  
+   # See above re: braindeadedness.
+   $uri->query( join('&', map { join('=', $_, $query_params->{$_} ) } keys %$query_params ) );
+   return $uri;
 }
 
 # Type for the sources list
@@ -173,6 +185,7 @@ has 'options' => (
    traits => ['RequestParam', 'ShouldQuote'],
    param => 'Options'
 );
+
 
 
 __PACKAGE__->meta->make_immutable;
