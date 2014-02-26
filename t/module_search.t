@@ -16,20 +16,21 @@ ok(
    'Check sources comma-based parsing' 
 );
 
-is( 
+is_deeply( 
    $obj->sources, 
-   'web+images',
+   ['web', 'images'],
    'Get the properly-formatted sources result?'
 );
 
 ok( 
-   $obj->options( 'EnableHilighting, DisableLocationDetection'), 
+   $obj->options( 'EnableHighlighting, DisableLocationDetection'), 
    'Can we set the options? / comma-with-space parsing'
 );
 
-is(
+is_deeply(
    $obj->options,
-   'EnableHilighting+DisableLocationDetection'
+   ['EnableHighlighting', 'DisableLocationDetection'],
+   'Check options parsing'
 );
 
 is( 
@@ -59,6 +60,6 @@ subtest 'Checking skip parameter' => sub {
 
 };
 
-is( $obj->_build_query, 'blarg' );
+is( $obj->_build_query, $uri);
 done_testing();
 

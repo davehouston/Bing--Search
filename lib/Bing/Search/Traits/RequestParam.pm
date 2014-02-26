@@ -13,37 +13,27 @@ has 'validate_param' => (
    default => 0
 );
 
-
-# Will validate parameters.  This is some hard-coded stuff.  Run away!
-sub _validate_param { 
-   my $self = shift;
+sub validate { 
+   my( $self, $value ) = @_;
    
-   my $validator = '_param_' . $self->param;
-   return 1 unless( $self->has( $validator ) );
-   $validator = $self->$validator();
-
-
-
+   my $validator = $self->can( 'validate_' . $self->param );
+   if( $validator ) { 
+      my $error = $self->$validator( $value );
+      return $error ? $error : undef;
+   } else { 
+      return undef;
+   }
 }
 
-has '_param_Options' => ( is => 'rw', isa => 'HashRef', lazy_build => 1, );
-
-sub _build__param_Options { 
-      { DisableLocationDetection => { type => 'Bool' },
-        EnableHighlighting => { type => 'Bool' }, }
-} 
-
-has '_web_options' => ( is => 'rw', isa => 'HashRef', lazy_build => 1, );
-
-sub _build__web_options { 
-   { DisableHostCollapsing => { type => 'Bool' },
-     DisableQueryAlteration => { type => 'Bool' }, }
-}
-
-has '_adult' => ( is => 'rw', isa => 'HashRef', lazy_build => 1, );
-
-sub _build__adult { 
-   { _value => { ['Off', 'Moderate', 'Strict' ] } }
+sub validate_Options { 
+   my( $self, $value ) = @_;
+   my $allowed = { EnableHighlighting => 1, DisableLocationDetection => 1 };
+   for my $param ( @$value ) { 
+      unless( exists $allowed->{$param} ) { 
+         return { error => $param . " is not an allowed parameter for Options." };
+      } 
+   }
+   return undef;
 }
 
 

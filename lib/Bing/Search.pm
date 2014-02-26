@@ -7,27 +7,6 @@ use URI;
 use URI::Escape;
 use Data::Dumper;
 
-sub BUILD { 
-   my $self = shift;
-   __PACKAGE__->meta->make_mutable;
-   # Look for things that are OptionLists..
-   for my $attr_name ( $self->meta->get_attribute_list ) { 
-      my $attribute = $self->meta->get_attribute( $attr_name );
-      if( $attribute->type_constraint->name eq 'Bing::Search::OptionList' ) { 
-         # If we find one, add an around modifier to munge it into a + list
-         my $method = sub { 
-            my $orig = shift;
-            my $self = shift;
-            my $arrayref = $self->$orig( @_ );
-            return join('+', @$arrayref );
-         };
-         $self->meta->add_around_method_modifier( $attribute->name, $method );
-      }
-   }
-   __PACKAGE__->meta->make_immutable;
-}
-
-
 sub _build_query { 
    my $self = shift;
    return $self->uri;
@@ -45,21 +24,37 @@ sub uri {
    # Find all the attributes with a RequestParam trait
    for my $attr_name ( $self->meta->get_attribute_list ) { 
       my $attribute = $self->meta->get_attribute( $attr_name );
-      if( $attribute->can('param') ) { 
+      if( $attribute->can('validate_param') ) { 
+         # We've got a validation-required attribute here.
+         my $attr_val = $self->$attr_name();
+         my $val = $attribute->validate( $attr_val );
+         die $val->{'error'} if $val;
+      }
+      
+      if( $attribute->can('param') ) {
          next unless $self->$attr_name();
-         my $key = $attribute->param;
-         my $value = uri_escape( $self->$attr_name() );
-
-         if( $attribute->should_quote ) { 
-            # this, and the ->query() method below are braindead; the Bing API
-            # requires ' be encoded; URI.pm disagrees.
-            $value = "%27$value%27";
+        
+         # Check the valid_for attribute.
+         if( $attribute->can('valid_for') ) { 
+            next unless $attribute->valid_for( $self->service_operation ); 
          }
+
+         my $key = $attribute->param;
+         my $value;
+         
+         if( $attribute->type_constraint->name eq 'Bing::Search::OptionList' ) { 
+            #Munge this into a +-joined string instead of an array.
+            $value = join( '+', @{$self->$attr_name()} );    
+         } else { 
+            $value = $self->$attr_name();
+         }
+         $value = uri_escape( $value );
+         $value = "%27$value%27" if( $attribute->should_quote );
+      
          $query_params->{"$key"} = $value;
       }
    }
   
-   # See above re: braindeadedness.
    $uri->query( join('&', map { join('=', $_, $query_params->{$_} ) } keys %$query_params ) );
    return $uri;
 }
@@ -184,6 +179,14 @@ has 'options' => (
    coerce => 1,
    traits => ['RequestParam', 'ShouldQuote'],
    param => 'Options'
+);
+
+has 'web_options' => ( 
+   is => 'rw',
+   isa => 'Bing::Search::OptionList',
+   coerce => 1,
+   traits => ['RequestParam', 'ShouldQuote'],
+   param => 'WebOptions'
 );
 
 
