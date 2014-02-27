@@ -25,17 +25,20 @@ sub validate {
    }
 }
 
+our $_validate_Options = { EnableHighlighting => 1, DisableLocationDetection => 1 };
 sub validate_Options { 
    my( $self, $value ) = @_;
-   my $allowed = { EnableHighlighting => 1, DisableLocationDetection => 1 };
    for my $param ( @$value ) { 
-      unless( exists $allowed->{$param} ) { 
+      unless( exists $_validate_Options->{$param} ) { 
          return { error => $param . " is not an allowed parameter for Options." };
       } 
    }
    return undef;
 }
 
+sub validate_Market { 
+   my( $self, $value ) = @_;
 
+}
 
 1;

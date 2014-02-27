@@ -3,6 +3,7 @@ use Moose;
 use Moose::Util::TypeConstraints;
 use Bing::Search::Traits::RequestParam;
 use Bing::Search::Traits::ShouldQuote;
+use Bing::Search::Traits::ValidFor;
 use URI;
 use URI::Escape;
 use Data::Dumper;
@@ -170,7 +171,8 @@ has 'market' => (
    isa => 'Str',
    documentation => 'The market',
    traits => ['RequestParam', 'ShouldQuote'],
-   param => 'Market'
+   param => 'Market',
+   validate_param => 1,
 );
 
 has 'options' => ( 
@@ -185,10 +187,67 @@ has 'web_options' => (
    is => 'rw',
    isa => 'Bing::Search::OptionList',
    coerce => 1,
-   traits => ['RequestParam', 'ShouldQuote'],
-   param => 'WebOptions'
+   traits => ['RequestParam', 'ShouldQuote', 'ValidFor'],
+   param => 'WebOptions',
+   valid_for => ['Web']
 );
 
+has 'web_file_type' => ( 
+   is => 'rw',
+   isa => 'Str',
+   traits => ['RequestParam', 'ValidFor', 'ShouldQuote'],
+   valid_for => ['Web'],
+   param => 'WebFileType'
+);
 
+has 'image_filters' => ( 
+   is => 'rw',
+   isa => 'ArrayRef',
+   traits => ['RequestParam','ValidFor','ShouldQuote'],
+   param => 'ImageFilters',
+   valid_for => ['Image']
+);
 
+has 'video_filters' => ( 
+   is => 'rw',
+   isa => 'Bing::Search::OptionList',
+   coerce => 1,
+   traits => ['RequestParam', 'ValidFor', 'ShouldQuote'],
+   param => 'VideoFilters',
+   valid_for => ['Video']
+);
+
+has 'video_sort_by' => ( 
+   is => 'rw',
+   isa => 'Str',
+   traits => ['RequestParam', 'ValidFor', 'ShouldQuote'],
+   param => 'VideoSortBy',
+   valid_for => ['Video']
+);
+
+has 'news_category' => ( 
+   is => 'rw',
+   isa => 'Str',
+   traits => ['RequestParam', 'ValidFor', 'ShouldQuote'],
+   param => 'NewsCategory',
+   valid_for => ['News']
+);
+
+has 'news_location_override' => ( 
+   is => 'rw',
+   isa => 'Str',
+   traits => ['RequestParam', 'ValidFor', 'ShouldQuote'],
+   param => 'NewsLocationOverride',
+   valid_for => ['News']
+);
+
+has 'news_sort_by' => ( 
+   is => 'rw',
+   isa => 'Str',
+   traits => ['RequestParam', 'ValidFor', 'ShouldQuote'],
+   param => 'NewsSortBy',
+   valid_for => ['News']
+);
+
+   
 __PACKAGE__->meta->make_immutable;
